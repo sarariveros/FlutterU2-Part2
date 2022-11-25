@@ -1,3 +1,5 @@
+export 'package:sesion9/screens/registro_screen.dart';
+
 export 'package:sesion9/preferences/styles.dart';
 
 export 'package:sesion9/widgets/custome_drawerSara.dart';

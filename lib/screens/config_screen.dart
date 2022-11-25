@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sesion9/preferences/preferences.dart';
+import 'package:sesion9/providers/theme_provider.dart';
 
 import '../widgets/index.dart';
 
@@ -11,66 +13,76 @@ class ConfigScreen extends StatefulWidget {
 }
 
 class _ConfigScreenState extends State<ConfigScreen> {
+  final imgController = TextEditingController(text: Preferences.img);
+  final nombreController = TextEditingController(text: Preferences.nombre);
+  final apellidosController =
+      TextEditingController(text: Preferences.apellidos);
+  final ciudadController = TextEditingController(text: Preferences.ciudad);
+  final paisController = TextEditingController(text: Preferences.pais);
+
   @override
   Widget build(BuildContext context) {
+    void guardar() {
+      Preferences.img = imgController.text;
+      Preferences.nombre = nombreController.text;
+      Preferences.apellidos = apellidosController.text;
+      Preferences.ciudad = ciudadController.text;
+      Preferences.pais = paisController.text;
+      setState(() {});
+    }
+
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          Switch(
+              value: Preferences.theme,
+              onChanged: (value) {
+                Preferences.theme = value;
+                final themeP =
+                    Provider.of<ThemeProvider>(context, listen: false);
+                value ? themeP.setObscuro() : themeP.setClaro();
+                setState(() {});
+              }),
+        ],
         title: const Text('Configuracion'),
         centerTitle: true,
       ),
-      drawer: const CustomeDrawerSaraWidget(),
+      drawer: const CustomeDrawerWidget(),
       body: SingleChildScrollView(
         child: Column(
           children: [
             CustomeTextFieldWidget(
-              initialValue: Preferences.img,
+              controller: imgController,
               keyboard: TextInputType.text,
               hintText: 'Imagen',
               prefixIcon: Icon(Icons.photo),
-              onChange: (value) {
-                Preferences.img = value;
-                setState(() {});
-              },
             ),
             CustomeTextFieldWidget(
-              initialValue: Preferences.nombre,
+              controller: nombreController,
               keyboard: TextInputType.text,
               hintText: 'Nombre',
               prefixIcon: Icon(Icons.person),
-              onChange: (value) {
-                Preferences.nombre = value;
-                setState(() {});
-              },
             ),
             CustomeTextFieldWidget(
-              initialValue: Preferences.apellidos,
+              controller: apellidosController,
               keyboard: TextInputType.text,
               hintText: 'Apellidos',
               prefixIcon: Icon(Icons.person),
-              onChange: (value) {
-                Preferences.apellidos = value;
-                setState(() {});
-              },
             ),
             CustomeTextFieldWidget(
-              initialValue: Preferences.ciudad,
+              controller: ciudadController,
               keyboard: TextInputType.text,
               hintText: 'Ciudad',
-              prefixIcon: Icon(Icons.location_city),
-              onChange: (value) {
-                Preferences.ciudad = value;
-                setState(() {});
-              },
+              prefixIcon: Icon(
+                Icons.location_city,
+                color: Colors.grey,
+              ),
             ),
             CustomeTextFieldWidget(
-              initialValue: Preferences.pais,
+              controller: paisController,
               keyboard: TextInputType.text,
               hintText: 'Pais',
               prefixIcon: Icon(Icons.local_airport_outlined),
-              onChange: (value) {
-                Preferences.pais = value;
-                setState(() {});
-              },
             ),
             RadioListTile(
               activeColor: Colors.green,
@@ -92,6 +104,13 @@ class _ConfigScreenState extends State<ConfigScreen> {
                 setState(() {});
               },
             ),
+            MaterialButton(
+                color: Colors.blueGrey,
+                child: const Text(
+                  'Guardar',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () => guardar()),
           ],
         ),
       ),

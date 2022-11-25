@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sesion9/widgets/drawerST.dart';
 import 'package:sesion9/widgets/index.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -11,7 +12,7 @@ class HomeScreen extends StatelessWidget {
         title: const Text('Home Screen'),
         centerTitle: true,
       ),
-      drawer: const CustomeDrawerSaraWidget(),
+      drawer: const CustomeDrawerWidget(),
       body: Center(
         child: Text(
           'Bienvenido',

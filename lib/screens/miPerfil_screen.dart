@@ -14,7 +14,7 @@ class MiPerfilScreen extends StatelessWidget {
         title: const Text('Mi Perfil'),
         centerTitle: true,
       ),
-      drawer: const CustomeDrawerSaraWidget(),
+      drawer: const CustomeDrawerWidget(),
       body: SingleChildScrollView(
         child: Center(
           child: Padding(

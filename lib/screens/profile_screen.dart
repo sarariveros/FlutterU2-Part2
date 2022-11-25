@@ -11,7 +11,9 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       //backgroundColor: Colors.amber,
-      extendBodyBehindAppBar: false,
+      //extendBodyBehindAppBar: false,
+      //appBar: AppBar(),
+      // drawer: const CustomeDrawerWidget(),
 
       body: SingleChildScrollView(
         child: Center(
@@ -76,18 +78,23 @@ class ProfileScreen extends StatelessWidget {
                               fillColor: Colors.white,
                               padding: const EdgeInsets.all(5.0),
                               shape: const CircleBorder(),
-                              child: const CircleAvatar(
-                                radius: 38,
-                                backgroundImage: NetworkImage(
-                                    'https://cdn.pixabay.com/photo/2022/10/28/11/14/leaves-7552915__340.png'),
-                              ),
+                              child: (Preferences.img == '')
+                                  ? CircleAvatar(
+                                      radius: 45,
+                                      child: Icon(Icons.photo),
+                                    )
+                                  : CircleAvatar(
+                                      radius: 45,
+                                      backgroundImage:
+                                          NetworkImage(Preferences.img),
+                                    ),
                             ),
                             Text(
-                              'Sara Riveros',
+                              '${Preferences.nombre} ${Preferences.apellidos}',
                               style: Styles.title,
                             ),
                             Text(
-                              'Junion Flutter Developer',
+                              'Junior Flutter Developer',
                               style: Styles.subtitle,
                             )
                           ],
@@ -146,21 +153,23 @@ class ProfileScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
-                    children: const [
+                    children: [
                       ItemWidget(
-                        icono: FontAwesomeIcons.addressCard,
-                        title: 'Email',
-                        content: 'algobonito@gmail.com',
+                        icono: FontAwesomeIcons.mapLocation,
+                        title: 'Ubicacion',
+                        content: '${Preferences.ciudad}, ${Preferences.pais}',
                       ),
                       ItemWidget(
                         icono: FontAwesomeIcons.mobile,
-                        title: 'Mobile',
-                        content: '999 999 999',
+                        title: 'Pais',
+                        content: Preferences.pais,
                       ),
                       ItemWidget(
                         icono: FontAwesomeIcons.twitter,
-                        title: 'Twitter',
-                        content: '@sarita123',
+                        title: 'Genero',
+                        content: (Preferences.genero == 2)
+                            ? 'Femenino'
+                            : 'Masculino',
                       ),
                       ItemWidget(
                         icono: FontAwesomeIcons.github,
